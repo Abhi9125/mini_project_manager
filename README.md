@@ -113,7 +113,7 @@ Default `server/.env`:
 PORT=5001
 NODE_ENV=development
 MONGODB_URI=mongodb://localhost:27017/project_management
-JWT_SECRET=supersecretjwtkey_change_in_production_123456
+JWT_SECRET=your_jwt_secret_key_here
 JWT_EXPIRES_IN=7d
 CLIENT_URL=http://localhost:3000
 ```
