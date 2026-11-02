@@ -61,7 +61,7 @@ export default function ProjectDetailPage() {
   } = useGetTasksQuery(
     {
       projectId,
-      status: statusFilter,
+      status: 'all',
       sortBy,
       order,
       search: searchQuery,
@@ -82,6 +82,11 @@ export default function ProjectDetailPage() {
     inProgress: tasks.filter((t) => t.status === 'in-progress').length,
     done: tasks.filter((t) => t.status === 'done').length,
   };
+
+  const displayedTasks =
+    viewMode === 'table' && statusFilter !== 'all'
+      ? tasks.filter((t) => t.status === statusFilter)
+      : tasks;
 
   // Handlers for Task Modal
   const handleOpenAddTask = (defaultStatus: TaskStatus = 'todo') => {
@@ -240,7 +245,7 @@ export default function ProjectDetailPage() {
         />
       ) : (
         <TaskTable
-          tasks={tasks}
+          tasks={displayedTasks}
           onEditTask={handleEditTask}
           onDeleteTask={handleDeleteTaskPrompt}
         />

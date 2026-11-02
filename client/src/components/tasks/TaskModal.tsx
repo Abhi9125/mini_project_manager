@@ -63,13 +63,15 @@ export default function TaskModal({
     }
 
     try {
+      const isoDueDate = new Date(dueDate + 'T12:00:00').toISOString();
+
       if (isEditing && task) {
         await updateTask({
           id: task._id,
           title: title.trim(),
           description: description.trim(),
           status,
-          dueDate: new Date(dueDate).toISOString(),
+          dueDate: isoDueDate,
         }).unwrap();
       } else {
         await createTask({
@@ -77,7 +79,7 @@ export default function TaskModal({
           title: title.trim(),
           description: description.trim(),
           status,
-          dueDate: new Date(dueDate).toISOString(),
+          dueDate: isoDueDate,
         }).unwrap();
       }
       onClose();
