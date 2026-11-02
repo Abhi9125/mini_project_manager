@@ -18,6 +18,8 @@ import {
   Clock,
   ListTodo,
   Loader2,
+  Sparkles,
+  TrendingUp,
 } from 'lucide-react';
 
 export default function DashboardPage() {
@@ -56,6 +58,8 @@ export default function DashboardPage() {
     }
   });
 
+  const overallCompletion = totalTasks > 0 ? Math.round((totalDone / totalTasks) * 100) : 0;
+
   const handleOpenCreateModal = () => {
     setEditingProject(null);
     setIsModalOpen(true);
@@ -85,70 +89,101 @@ export default function DashboardPage() {
       {/* Welcome & Action Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">
-            Welcome back, {user?.name || 'Developer'}! 👋
-          </h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Here is an overview of your active projects and task completion.
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+              Welcome back, {user?.name?.split(' ')[0] || 'Developer'}
+            </h1>
+            <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-2 py-0.5 text-[11px] font-medium text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+              Active
+            </span>
+          </div>
+          <p className="mt-1 text-xs sm:text-sm text-slate-500 dark:text-zinc-400">
+            Monitor real-time project progress and sprint task completion.
           </p>
         </div>
 
         <button
           onClick={handleOpenCreateModal}
-          className="flex items-center gap-2 self-start sm:self-auto rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 transition-colors"
+          className="flex items-center gap-2 self-start sm:self-auto rounded-xl bg-gradient-to-r from-indigo-500 via-indigo-600 to-purple-600 px-4 py-2.5 text-xs font-semibold text-white shadow-glow hover:opacity-95 transition-all"
         >
           <FolderPlus className="h-4 w-4" />
           <span>New Project</span>
         </button>
       </div>
 
-      {/* Metrics Row */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600">
-              <FolderKanban className="h-5 w-5" />
+      {/* Aceternity Bento Grid Metric Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Card 1: Total Projects */}
+        <div className="relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/70 p-5 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-zinc-900/50">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500 dark:text-zinc-400">Total Projects</span>
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+              <FolderKanban className="h-4 w-4" />
             </div>
-            <div>
-              <p className="text-xs font-medium text-gray-500">Total Projects</p>
-              <p className="text-2xl font-bold text-gray-900">{totalProjects}</p>
-            </div>
+          </div>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-3xl font-black text-slate-900 dark:text-white">{totalProjects}</span>
+            <span className="text-[11px] text-slate-400 dark:text-zinc-500">workspaces</span>
+          </div>
+          <div className="mt-3 flex items-center gap-1.5 text-[11px] text-indigo-600 dark:text-indigo-400 font-medium">
+            <TrendingUp className="h-3.5 w-3.5" />
+            <span>Active tracking</span>
           </div>
         </div>
 
-        <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-50 text-amber-600">
-              <ListTodo className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-xs font-medium text-gray-500">Pending (To Do)</p>
-              <p className="text-2xl font-bold text-gray-900">{totalTodo}</p>
+        {/* Card 2: To Do */}
+        <div className="relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/70 p-5 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-zinc-900/50">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500 dark:text-zinc-400">To Do</span>
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+              <ListTodo className="h-4 w-4" />
             </div>
           </div>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-3xl font-black text-slate-900 dark:text-white">{totalTodo}</span>
+            <span className="text-[11px] text-slate-400 dark:text-zinc-500">pending tasks</span>
+          </div>
+          <p className="mt-3 text-[11px] text-amber-600 dark:text-amber-400 font-medium">
+            Ready for execution
+          </p>
         </div>
 
-        <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
-              <Clock className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-xs font-medium text-gray-500">In Progress</p>
-              <p className="text-2xl font-bold text-gray-900">{totalInProgress}</p>
+        {/* Card 3: In Progress */}
+        <div className="relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/70 p-5 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-zinc-900/50">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500 dark:text-zinc-400">In Progress</span>
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+              <Clock className="h-4 w-4" />
             </div>
           </div>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-3xl font-black text-slate-900 dark:text-white">{totalInProgress}</span>
+            <span className="text-[11px] text-slate-400 dark:text-zinc-500">underway</span>
+          </div>
+          <p className="mt-3 text-[11px] text-indigo-600 dark:text-indigo-400 font-medium">
+            Active sprints
+          </p>
         </div>
 
-        <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
-              <CheckCircle2 className="h-5 w-5" />
+        {/* Card 4: Completed Tasks & Rate */}
+        <div className="relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/70 p-5 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-zinc-900/50">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-500 dark:text-zinc-400">Done</span>
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+              <CheckCircle2 className="h-4 w-4" />
             </div>
-            <div>
-              <p className="text-xs font-medium text-gray-500">Completed Tasks</p>
-              <p className="text-2xl font-bold text-gray-900">{totalDone}</p>
-            </div>
+          </div>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-3xl font-black text-slate-900 dark:text-white">{totalDone}</span>
+            <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold">
+              ({overallCompletion}% rate)
+            </span>
+          </div>
+          <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
+            <div
+              className="h-full bg-emerald-500 rounded-full transition-all duration-500"
+              style={{ width: `${overallCompletion}%` }}
+            />
           </div>
         </div>
       </div>
@@ -156,18 +191,23 @@ export default function DashboardPage() {
       {/* Projects Section Header & Search */}
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <h2 className="text-lg font-semibold text-gray-900">
-            Projects ({filteredProjects.length})
-          </h2>
+          <div className="flex items-center gap-2">
+            <h2 className="text-base font-bold text-slate-900 dark:text-white">
+              Projects
+            </h2>
+            <span className="rounded-full bg-slate-200/70 px-2 py-0.5 text-[11px] font-semibold text-slate-700 dark:bg-zinc-800 dark:text-zinc-300">
+              {filteredProjects.length}
+            </span>
+          </div>
 
           <div className="relative w-full sm:w-72">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400 dark:text-zinc-500" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search projects..."
-              className="w-full rounded-lg border border-gray-300 py-1.5 pl-9 pr-3 text-sm text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              placeholder="Filter projects..."
+              className="w-full rounded-xl border border-slate-200/80 bg-white/70 py-2 pl-9 pr-3 text-xs text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 dark:border-white/10 dark:bg-zinc-900/60 dark:text-white dark:placeholder-zinc-500 dark:focus:border-indigo-400 transition-all"
             />
           </div>
         </div>
@@ -175,30 +215,30 @@ export default function DashboardPage() {
         {/* Project Cards Grid */}
         {isLoading ? (
           <div className="flex min-h-[300px] flex-col items-center justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
-            <p className="mt-2 text-sm text-gray-500">Loading your projects...</p>
+            <Loader2 className="h-7 w-7 animate-spin text-indigo-500" />
+            <p className="mt-2 text-xs text-slate-400 dark:text-zinc-500">Loading workspaces...</p>
           </div>
         ) : isError ? (
-          <div className="rounded-xl border border-red-200 bg-red-50 p-6 text-center text-red-700">
+          <div className="rounded-2xl border border-red-500/20 bg-red-500/10 p-6 text-center text-xs text-red-600 dark:text-red-400">
             Failed to load projects. Ensure the backend server is running.
           </div>
         ) : filteredProjects.length === 0 ? (
-          <div className="flex min-h-[320px] flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-300 bg-white p-12 text-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-50 text-indigo-600">
+          <div className="flex min-h-[320px] flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300/80 bg-white/50 p-12 text-center dark:border-white/10 dark:bg-zinc-900/30">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 shadow-glow">
               <FolderPlus className="h-6 w-6" />
             </div>
-            <h3 className="mt-3 text-base font-semibold text-gray-900">
-              {searchQuery ? 'No matching projects found' : 'No projects yet'}
+            <h3 className="mt-3 text-sm font-bold text-slate-900 dark:text-white">
+              {searchQuery ? 'No matching projects' : 'No projects created yet'}
             </h3>
-            <p className="mt-1 text-sm text-gray-500 max-w-sm">
+            <p className="mt-1 text-xs text-slate-500 dark:text-zinc-400 max-w-sm">
               {searchQuery
-                ? 'Try searching with a different keyword.'
-                : 'Get started by creating your first project to manage tasks and track progress.'}
+                ? 'Try searching with a different keyword or clear your filter.'
+                : 'Create your first project workspace to start tracking tasks and kanban workflows.'}
             </p>
             {!searchQuery && (
               <button
                 onClick={handleOpenCreateModal}
-                className="mt-5 flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors"
+                className="mt-5 flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 px-4 py-2 text-xs font-semibold text-white shadow-glow hover:opacity-95 transition-all"
               >
                 <FolderPlus className="h-4 w-4" />
                 <span>Create First Project</span>
