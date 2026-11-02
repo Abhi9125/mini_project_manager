@@ -84,7 +84,7 @@ export default function ProjectDetailPage() {
   };
 
   const displayedTasks =
-    viewMode === 'table' && statusFilter !== 'all'
+    statusFilter !== 'all'
       ? tasks.filter((t) => t.status === statusFilter)
       : tasks;
 
@@ -238,7 +238,7 @@ export default function ProjectDetailPage() {
         </div>
       ) : viewMode === 'kanban' ? (
         <KanbanBoard
-          tasks={tasks}
+          tasks={displayedTasks}
           onAddTask={handleOpenAddTask}
           onEditTask={handleEditTask}
           onDeleteTask={handleDeleteTaskPrompt}

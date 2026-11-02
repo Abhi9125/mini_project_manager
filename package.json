@@ -4,8 +4,10 @@
   "description": "Mini Project Management web application built with Next.js, Express, Redux Toolkit, and MongoDB",
   "private": true,
   "scripts": {
+    "install:all": "npm --prefix server install && npm --prefix client install",
     "dev:server": "npm --prefix server run dev",
     "dev:client": "npm --prefix client run dev",
+    "build": "npm --prefix server run build && npm --prefix client run build",
     "build:server": "npm --prefix server run build",
     "build:client": "npm --prefix client run build",
     "seed": "npm --prefix server run seed"

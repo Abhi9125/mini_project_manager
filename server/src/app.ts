@@ -8,20 +8,28 @@ import { notFoundHandler, errorHandler } from './middleware/errorMiddleware.js';
 
 const app: Application = express();
 
-// Middleware
-const allowedOrigins = [
-  env.CLIENT_URL,
-  'http://localhost:3000',
-  'http://127.0.0.1:3000',
-];
+// Middleware - CORS configuration
+const clientUrls = env.CLIENT_URL
+  ? env.CLIENT_URL.split(',').map((url) => url.trim().replace(/\/+$/, ''))
+  : [];
+const defaultOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000'];
+const allowedOrigins = new Set([...clientUrls, ...defaultOrigins]);
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin) || env.isDevelopment) {
+      // Allow requests with no origin (like mobile apps, curl, or Postman) or during local dev
+      if (!origin || env.isDevelopment) {
         return callback(null, true);
       }
-      return callback(new Error('Not allowed by CORS'));
+      const normalizedOrigin = origin.replace(/\/+$/, '');
+      if (
+        allowedOrigins.has(normalizedOrigin) ||
+        normalizedOrigin.endsWith('.vercel.app')
+      ) {
+        return callback(null, true);
+      }
+      return callback(new Error(`Origin ${origin} not allowed by CORS`));
     },
     credentials: true,
   })
