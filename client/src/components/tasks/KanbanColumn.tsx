@@ -26,20 +26,20 @@ export default function KanbanColumn({
   const getIcon = () => {
     switch (status) {
       case 'todo':
-        return <Circle className="h-4 w-4 text-amber-500" />;
+        return <Circle className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />;
       case 'in-progress':
-        return <Clock className="h-4 w-4 text-blue-500" />;
+        return <Clock className="h-3.5 w-3.5 text-indigo-500" />;
       case 'done':
-        return <CheckCircle2 className="h-4 w-4 text-emerald-500" />;
+        return <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />;
     }
   };
 
-  const getBorderColor = () => {
+  const getBorderTopColor = () => {
     switch (status) {
       case 'todo':
         return 'border-t-amber-500';
       case 'in-progress':
-        return 'border-t-blue-500';
+        return 'border-t-indigo-500';
       case 'done':
         return 'border-t-emerald-500';
     }
@@ -48,39 +48,41 @@ export default function KanbanColumn({
   return (
     <div
       className={cn(
-        'flex flex-col rounded-xl border border-gray-200 bg-gray-50/70 p-4 shadow-sm border-t-4',
-        getBorderColor()
+        'flex flex-col rounded-2xl border border-slate-200/80 bg-slate-100/60 p-4 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-zinc-900/40 border-t-2 transition-colors',
+        getBorderTopColor()
       )}
     >
       {/* Column Header */}
-      <div className="flex items-center justify-between pb-3 mb-3 border-b border-gray-200">
+      <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-200/60 dark:border-white/5">
         <div className="flex items-center gap-2">
           {getIcon()}
-          <h3 className="text-sm font-semibold text-gray-900">{title}</h3>
-          <span className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-white px-1.5 text-xs font-semibold text-gray-600 shadow-sm border border-gray-200">
+          <h3 className="text-xs font-bold tracking-tight text-slate-900 dark:text-zinc-200 uppercase">
+            {title}
+          </h3>
+          <span className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-white px-1.5 text-[10px] font-bold text-slate-700 shadow-sm dark:bg-zinc-800 dark:text-zinc-300 border border-slate-200/80 dark:border-white/10">
             {tasks.length}
           </span>
         </div>
 
         <button
           onClick={() => onAddTask(status)}
-          className="rounded-lg p-1 text-gray-400 hover:bg-white hover:text-gray-700 hover:shadow-sm transition-all"
+          className="rounded-lg p-1 text-slate-400 hover:bg-white hover:text-slate-800 dark:text-zinc-500 dark:hover:bg-white/10 dark:hover:text-zinc-200 transition-all shadow-sm"
           title={`Add task to ${title}`}
         >
-          <Plus className="h-4 w-4" />
+          <Plus className="h-3.5 w-3.5" />
         </button>
       </div>
 
-      {/* Task List */}
-      <div className="flex flex-col gap-3 min-h-[300px]">
+      {/* Task List Container */}
+      <div className="flex flex-col gap-2.5 min-h-[300px]">
         {tasks.length === 0 ? (
-          <div className="flex flex-1 flex-col items-center justify-center rounded-lg border border-dashed border-gray-300 p-6 text-center">
-            <p className="text-xs text-gray-400">No tasks in {title.toLowerCase()}</p>
+          <div className="flex flex-1 flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 p-6 text-center dark:border-white/5">
+            <p className="text-[11px] text-slate-400 dark:text-zinc-500">No tasks in {title.toLowerCase()}</p>
             <button
               onClick={() => onAddTask(status)}
-              className="mt-2 text-xs font-medium text-indigo-600 hover:text-indigo-700"
+              className="mt-2 text-[11px] font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400"
             >
-              + Add a task
+              + Create task
             </button>
           </div>
         ) : (
