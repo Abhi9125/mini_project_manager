@@ -36,9 +36,15 @@ export default function LoginPage() {
         router.push('/dashboard');
       }
     } catch (err: any) {
-      setErrorMessage(
-        err?.data?.message || 'Invalid email or password. Please try again.'
-      );
+      if (err?.status === 'FETCH_ERROR') {
+        setErrorMessage(
+          'Cannot connect to backend server. Please verify the Express backend is running on http://localhost:5000.'
+        );
+      } else {
+        setErrorMessage(
+          err?.data?.message || 'Invalid email or password. Please try again.'
+        );
+      }
     }
   };
 

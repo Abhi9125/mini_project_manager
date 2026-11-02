@@ -42,9 +42,17 @@ export default function RegisterPage() {
         router.push('/dashboard');
       }
     } catch (err: any) {
-      setErrorMessage(
-        err?.data?.message || 'Registration failed. Please check your details.'
-      );
+      if (err?.status === 'FETCH_ERROR') {
+        setErrorMessage(
+          'Cannot connect to backend server. Please verify the Express backend is running on http://localhost:5000.'
+        );
+      } else if (err?.data?.errors && Array.isArray(err.data.errors)) {
+        setErrorMessage(err.data.errors.join(', '));
+      } else {
+        setErrorMessage(
+          err?.data?.message || 'Registration failed. Please check your details.'
+        );
+      }
     }
   };
 
