@@ -1,9 +1,9 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import authRoutes from './routes/authRoutes.js';
-import projectRoutes from './routes/projectRoutes.js';
-import { standaloneTaskRouter } from './routes/taskRoutes.js';
+import authRoutes from './modules/auth/authRoutes.js';
+import projectRoutes from './modules/projects/projectRoutes.js';
+import { standaloneTaskRouter } from './modules/tasks/taskRoutes.js';
 import { notFoundHandler, errorHandler } from './middleware/errorMiddleware.js';
 
 dotenv.config();

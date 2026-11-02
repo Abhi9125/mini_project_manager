@@ -1,11 +1,10 @@
-import { taskRepository, TaskFilterOptions } from '../repositories/taskRepository.js';
-import { projectRepository } from '../repositories/projectRepository.js';
-import { TaskStatus } from '../models/Task.js';
-import { AppError } from '../utils/AppError.js';
+import { taskRepository, TaskFilterOptions } from './taskRepository.js';
+import { projectRepository } from '../projects/projectRepository.js';
+import { TaskStatus } from '../../models/Task.js';
+import { AppError } from '../../utils/AppError.js';
 
 export const taskService = {
   async getTasksByProject(projectId: string, userId: string, options: TaskFilterOptions) {
-    // Verify project belongs to user
     const project = await projectRepository.findByIdAndUser(projectId, userId);
     if (!project) {
       throw new AppError('Project not found or unauthorized.', 404);
@@ -24,7 +23,6 @@ export const taskService = {
       dueDate: string | Date;
     }
   ) {
-    // Verify project belongs to user
     const project = await projectRepository.findByIdAndUser(projectId, userId);
     if (!project) {
       throw new AppError('Project not found or unauthorized.', 404);

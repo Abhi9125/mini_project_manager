@@ -5,14 +5,14 @@ import {
   getTaskById,
   updateTask,
   deleteTask,
-} from '../controllers/taskController.js';
-import { protect } from '../middleware/authMiddleware.js';
-import { validate } from '../middleware/validateMiddleware.js';
+} from './taskController.js';
+import { protect } from '../../middleware/authMiddleware.js';
+import { validate } from '../../middleware/validateMiddleware.js';
 import {
   createTaskSchema,
   updateTaskSchema,
   queryTasksSchema,
-} from '../validations/taskValidation.js';
+} from './taskValidation.js';
 
 const router = Router({ mergeParams: true });
 
@@ -23,7 +23,7 @@ router.use(protect);
 router.get('/', validate(queryTasksSchema), getTasksByProject);
 router.post('/', validate(createTaskSchema), createTask);
 
-// Direct task routes: /api/tasks/:id
+// Standalone direct task routes: /api/tasks/:id
 export const standaloneTaskRouter = Router();
 standaloneTaskRouter.use(protect);
 standaloneTaskRouter.get('/:id', getTaskById);

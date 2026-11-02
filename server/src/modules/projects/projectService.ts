@@ -1,6 +1,6 @@
-import { projectRepository } from '../repositories/projectRepository.js';
-import { taskRepository } from '../repositories/taskRepository.js';
-import { AppError } from '../utils/AppError.js';
+import { projectRepository } from './projectRepository.js';
+import { taskRepository } from '../tasks/taskRepository.js';
+import { AppError } from '../../utils/AppError.js';
 
 export const projectService = {
   async getProjects(userId: string) {

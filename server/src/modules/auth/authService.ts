@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { userRepository } from '../repositories/userRepository.js';
-import { AppError } from '../utils/AppError.js';
+import { authRepository } from './authRepository.js';
+import { AppError } from '../../utils/AppError.js';
 
 interface UserResponse {
   id: string;
@@ -22,12 +22,12 @@ const generateToken = (id: string, email: string, name: string): string => {
 
 export const authService = {
   async register(name: string, email: string, password: string): Promise<AuthResult> {
-    const existingUser = await userRepository.findByEmail(email);
+    const existingUser = await authRepository.findByEmail(email);
     if (existingUser) {
       throw new AppError('A user with this email address already exists.', 409);
     }
 
-    const user = await userRepository.create({ name, email, password });
+    const user = await authRepository.create({ name, email, password });
     const token = generateToken(user._id.toString(), user.email, user.name);
 
     return {
@@ -42,7 +42,7 @@ export const authService = {
   },
 
   async login(email: string, password: string): Promise<AuthResult> {
-    const user = await userRepository.findByEmail(email);
+    const user = await authRepository.findByEmail(email);
     if (!user) {
       throw new AppError('Invalid email or password.', 401);
     }
@@ -66,7 +66,7 @@ export const authService = {
   },
 
   async getMe(userId: string): Promise<UserResponse> {
-    const user = await userRepository.findById(userId);
+    const user = await authRepository.findById(userId);
     if (!user) {
       throw new AppError('User not found.', 404);
     }

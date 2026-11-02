@@ -62,18 +62,20 @@ project-management/
 │   ├── .env.example
 │   └── package.json
 │
-├── server/                     # Express REST API (3-Tier Layered Architecture)
+├── server/                     # Express REST API (Modular 3-Tier Architecture)
 │   ├── src/
 │   │   ├── config/             # MongoDB connection config
-│   │   ├── controllers/        # HTTP Request & Response handling
-│   │   ├── services/           # Core domain business logic & error handling
-│   │   ├── repositories/       # Direct database query encapsulation
 │   │   ├── middleware/         # Auth, validation, and error middlewares
 │   │   ├── models/             # User, Project, and Task Mongoose schemas
-│   │   ├── routes/             # Express route definitions
+│   │   ├── modules/            # Feature modules (Controller, Service, Repository, Routes, Validation)
+│   │   │   ├── auth/           # authController, authService, authRepository, authRoutes, authValidation
+│   │   │   ├── projects/       # projectController, projectService, projectRepository, projectRoutes, projectValidation
+│   │   │   └── tasks/          # taskController, taskService, taskRepository, taskRoutes, taskValidation
 │   │   ├── scripts/            # Database seed script
 │   │   ├── utils/              # Custom AppError and helper utilities
-│   │   └── validations/        # Zod validation schemas
+│   │   ├── types/              # Express typings and interfaces
+│   │   ├── app.ts              # Express application bootstrap
+│   │   └── server.ts           # Server entry point
 │   ├── .env.example
 │   └── package.json
 │

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { projectService } from '../services/projectService.js';
+import { projectService } from './projectService.js';
 
 export const getProjects = async (
   req: Request,

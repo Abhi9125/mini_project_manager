@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { taskService } from '../services/taskService.js';
-import { TaskStatus } from '../models/Task.js';
+import { taskService } from './taskService.js';
+import { TaskStatus } from '../../models/Task.js';
 
 export const getTasksByProject = async (
   req: Request,

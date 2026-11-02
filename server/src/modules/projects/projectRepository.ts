@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import { Project, IProject } from '../models/Project.js';
-import { Task } from '../models/Task.js';
+import { Project, IProject } from '../../models/Project.js';
+import { Task } from '../../models/Task.js';
 
 export interface ProjectWithStats extends IProject {
   taskStats: {

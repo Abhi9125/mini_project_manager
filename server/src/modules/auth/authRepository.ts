@@ -1,6 +1,6 @@
-import { User, IUser } from '../models/User.js';
+import { User, IUser } from '../../models/User.js';
 
-export const userRepository = {
+export const authRepository = {
   async findByEmail(email: string): Promise<IUser | null> {
     return User.findOne({ email });
   },

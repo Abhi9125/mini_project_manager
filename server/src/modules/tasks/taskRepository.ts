@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Task, ITask, TaskStatus } from '../models/Task.js';
+import { Task, ITask, TaskStatus } from '../../models/Task.js';
 
 export interface TaskFilterOptions {
   status?: string;

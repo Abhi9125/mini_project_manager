@@ -5,14 +5,14 @@ import {
   getProjectById,
   updateProject,
   deleteProject,
-} from '../controllers/projectController.js';
-import taskRouter from './taskRoutes.js';
-import { protect } from '../middleware/authMiddleware.js';
-import { validate } from '../middleware/validateMiddleware.js';
+} from './projectController.js';
+import taskRouter from '../tasks/taskRoutes.js';
+import { protect } from '../../middleware/authMiddleware.js';
+import { validate } from '../../middleware/validateMiddleware.js';
 import {
   createProjectSchema,
   updateProjectSchema,
-} from '../validations/projectValidation.js';
+} from './projectValidation.js';
 
 const router = Router();
 
