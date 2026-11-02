@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { authRepository } from './authRepository.js';
 import { AppError } from '../../utils/AppError.js';
+import { env } from '../../config/env.js';
 
 interface UserResponse {
   id: string;
@@ -15,9 +16,9 @@ interface AuthResult {
 }
 
 const generateToken = (id: string, email: string, name: string): string => {
-  const secret = process.env.JWT_SECRET || 'supersecretjwtkey_change_in_production_123456';
-  const expiresIn = (process.env.JWT_EXPIRES_IN || '7d') as any;
-  return jwt.sign({ id, email, name }, secret, { expiresIn });
+  return jwt.sign({ id, email, name }, env.JWT_SECRET, {
+    expiresIn: env.JWT_EXPIRES_IN as any,
+  });
 };
 
 export const authService = {

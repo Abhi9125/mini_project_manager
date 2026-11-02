@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { IUserPayload } from '../types/index.js';
+import { env } from '../config/env.js';
 
 export const protect = async (
   req: Request,
@@ -23,8 +24,7 @@ export const protect = async (
   }
 
   try {
-    const secret = process.env.JWT_SECRET || 'supersecretjwtkey_change_in_production_123456';
-    const decoded = jwt.verify(token, secret) as IUserPayload;
+    const decoded = jwt.verify(token, env.JWT_SECRET) as IUserPayload;
     req.user = decoded;
     next();
   } catch (error) {

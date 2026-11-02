@@ -1,19 +1,17 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
+import { env } from './config/env.js';
 import authRoutes from './modules/auth/authRoutes.js';
 import projectRoutes from './modules/projects/projectRoutes.js';
 import { standaloneTaskRouter } from './modules/tasks/taskRoutes.js';
 import { notFoundHandler, errorHandler } from './middleware/errorMiddleware.js';
-
-dotenv.config();
 
 const app: Application = express();
 
 // Middleware
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    origin: env.CLIENT_URL,
     credentials: true,
   })
 );

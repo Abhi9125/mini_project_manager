@@ -1,16 +1,13 @@
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import { User } from '../models/User.js';
 import { Project } from '../models/Project.js';
 import { Task } from '../models/Task.js';
-
-dotenv.config();
+import { env } from '../config/env.js';
 
 const seedDatabase = async () => {
   try {
-    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/project_management';
     console.log('Connecting to MongoDB for seeding...');
-    await mongoose.connect(mongoUri);
+    await mongoose.connect(env.MONGODB_URI);
 
     console.log('Clearing existing data...');
     await User.deleteMany({});
