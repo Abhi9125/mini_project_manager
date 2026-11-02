@@ -146,14 +146,13 @@ The frontend will start on `http://localhost:3000`.
 
 ### Option 2: Run MongoDB via Docker Compose
 
-If you do not have MongoDB installed locally, you can start MongoDB and Mongo Express with Docker:
+If you do not have MongoDB installed locally, you can start MongoDB with Docker:
 
 ```bash
 # From project root
 docker compose up -d
 ```
 - MongoDB runs on `mongodb://localhost:27017`
-- Mongo Express Web UI runs on `http://localhost:8081` (Username: `admin`, Password: `password123`)
 
 ---
 
