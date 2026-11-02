@@ -10,14 +10,14 @@ const app: Application = express();
 
 // Middleware - CORS configuration
 const clientUrls = env.CLIENT_URL
-  ? env.CLIENT_URL.split(',').map((url) => url.trim().replace(/\/+$/, ''))
+  ? env.CLIENT_URL.split(',').map((url: string) => url.trim().replace(/\/+$/, ''))
   : [];
 const defaultOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000'];
 const allowedOrigins = new Set([...clientUrls, ...defaultOrigins]);
 
 app.use(
   cors({
-    origin: (origin, callback) => {
+    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
       // Allow requests with no origin (like mobile apps, curl, or Postman) or during local dev
       if (!origin || env.isDevelopment) {
         return callback(null, true);
