@@ -110,14 +110,14 @@ cp .env.example .env
 ```
 Default `server/.env`:
 ```env
-PORT=5000
+PORT=5001
 NODE_ENV=development
 MONGODB_URI=mongodb://localhost:27017/project_management
 JWT_SECRET=supersecretjwtkey_change_in_production_123456
 JWT_EXPIRES_IN=7d
 CLIENT_URL=http://localhost:3000
 ```
-*(If using MongoDB Atlas, replace `MONGODB_URI` with your connection string).*
+*(Port 5001 is used by default to prevent conflicts with macOS ControlCenter/AirPlay Receiver on port 5000).*
 
 #### 3. Install Server Dependencies & Seed Database
 ```bash
@@ -130,7 +130,7 @@ npm run seed
 # Start Express server in development mode
 npm run dev
 ```
-The server will start on `http://localhost:5000`.
+The server will start on `http://localhost:5001`.
 
 #### 4. Configure & Start Frontend
 In a new terminal window:

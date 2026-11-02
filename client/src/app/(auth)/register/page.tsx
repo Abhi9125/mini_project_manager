@@ -45,7 +45,7 @@ export default function RegisterPage() {
     } catch (err: any) {
       if (err?.status === 'FETCH_ERROR') {
         setErrorMessage(
-          'Cannot connect to backend server. Please verify the Express backend is running on http://localhost:5000.'
+          'Cannot connect to backend server. Please verify the Express backend is running on http://localhost:5001.'
         );
       } else if (err?.data?.errors && Array.isArray(err.data.errors)) {
         setErrorMessage(err.data.errors.join(', '));

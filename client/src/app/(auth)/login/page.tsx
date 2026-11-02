@@ -39,7 +39,7 @@ export default function LoginPage() {
     } catch (err: any) {
       if (err?.status === 'FETCH_ERROR') {
         setErrorMessage(
-          'Cannot connect to backend server. Please verify the Express backend is running on http://localhost:5000.'
+          'Cannot connect to backend server. Please verify the Express backend is running on http://localhost:5001.'
         );
       } else {
         setErrorMessage(
