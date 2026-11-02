@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { AppError } from '../utils/AppError.js';
 
 export const notFoundHandler = (req: Request, res: Response, next: NextFunction): void => {
   res.status(404).json({
@@ -13,10 +14,12 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ): void => {
-  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+  const statusCode = err.statusCode || (res.statusCode === 200 ? 500 : res.statusCode);
   const message = err.message || 'Internal Server Error';
 
-  console.error(`[Error] ${req.method} ${req.originalUrl}:`, err);
+  if (!err.isOperational) {
+    console.error(`[Unexpected Error] ${req.method} ${req.originalUrl}:`, err);
+  }
 
   res.status(statusCode).json({
     success: false,
